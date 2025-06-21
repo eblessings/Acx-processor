@@ -1,0 +1,46 @@
+# docker-compose.yml
+# Professional ACX Cover Processor
+# GitHub: https://github.com/eblessings/Acx-processor.git
+
+version: '3.8'
+
+services:
+  acx-processor:
+    build: .
+    container_name: acx-processor
+    ports:
+      - "8000:8000"
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - DEBUG=false
+      - LOG_LEVEL=INFO
+      - MAX_FILE_SIZE=52428800  # 50MB
+    volumes:
+      - ./uploads:/app/uploads
+      - ./cache:/app/cache
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  nginx:
+    image: nginx:alpine
+    container_name: acx-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./index.html:/usr/share/nginx/html/index.html:ro
+    depends_on:
+      - acx-processor
+    restart: unless-stopped
+
+volumes:
+  uploads:
+  cache:
+  logs:

@@ -1,0 +1,38 @@
+# .env.example
+# Professional ACX Cover Processor Configuration
+# GitHub: https://github.com/eblessings/Acx-processor.git
+# Copy this file to .env and modify as needed
+
+# API Configuration
+API_HOST=0.0.0.0
+API_PORT=8000
+DEBUG=true
+
+# File Processing
+MAX_FILE_SIZE=52428800  # 50MB in bytes
+LOG_LEVEL=INFO
+
+# Security (generate secure values for production)
+SECRET_KEY=your-secret-key-here
+
+# Rate Limiting
+RATE_LIMIT_REQUESTS=10
+RATE_LIMIT_WINDOW=60  # seconds
+
+# Processing Options
+DEFAULT_OUTPUT_SIZE=3000x3000
+SUPPORTED_FORMATS=jpg,jpeg,png,gif,webp,bmp
+ENABLE_GPU=false  # Set to true if you have CUDA-compatible GPU
+
+# Storage Paths (relative to application directory)
+UPLOAD_PATH=./uploads
+CACHE_PATH=./cache
+LOG_PATH=./logs
+
+# Performance
+WORKERS=1  # Number of worker processes (set to CPU cores for production)
+WORKER_TIMEOUT=300  # 5 minutes
+
+# Monitoring
+ENABLE_METRICS=true
+HEALTH_CHECK_INTERVAL=30
